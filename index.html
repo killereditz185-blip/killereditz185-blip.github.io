@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,74 +8,39 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
 
 body{
-background:linear-gradient(135deg,#f0f4ff,#e2e8f0);
+background:linear-gradient(135deg,#eef2ff,#e0e7ff);
 color:#111827;
 }
 
-/* NAVBAR */
 nav{
 display:flex;
 justify-content:space-between;
-align-items:center;
 padding:20px 40px;
 background:white;
-box-shadow:0 4px 20px rgba(0,0,0,0.05);
-position:sticky;
-top:0;
-z-index:100;
+box-shadow:0 5px 20px rgba(0,0,0,0.05);
 }
 
-.logo{
-font-weight:700;
-font-size:22px;
-color:#2563eb;
-}
+.logo{font-weight:700;font-size:22px;color:#2563eb;}
 
-nav ul{
-display:flex;
-list-style:none;
-gap:25px;
-}
-
-nav ul li{
-cursor:pointer;
-font-size:15px;
-color:#374151;
-}
-
-/* HERO */
 .hero{
 text-align:center;
-padding:70px 20px 40px;
+padding:60px 20px;
 }
 
-.hero h1{
-font-size:38px;
-font-weight:700;
-margin-bottom:15px;
-}
+.hero h1{font-size:38px;margin-bottom:10px;}
+.hero p{color:#6b7280;}
 
-.hero p{
-color:#6b7280;
-font-size:18px;
-}
-
-/* UPLOAD CARD */
 .card{
 background:white;
-max-width:500px;
-margin:40px auto;
+max-width:600px;
+margin:30px auto;
 padding:40px;
 border-radius:20px;
-box-shadow:0 20px 40px rgba(0,0,0,0.08);
+box-shadow:0 20px 40px rgba(0,0,0,0.1);
 text-align:center;
-}
-
-input[type=file]{
-margin:20px 0;
 }
 
 button{
@@ -86,129 +51,138 @@ padding:14px 30px;
 border-radius:30px;
 font-size:16px;
 cursor:pointer;
-transition:0.3s;
-}
-
-button:hover{
-transform:translateY(-2px);
-box-shadow:0 10px 20px rgba(37,99,235,0.3);
-}
-
-#result{
-margin-top:25px;
-max-width:100%;
-border-radius:12px;
-display:none;
-}
-
-#downloadBtn{
-display:none;
 margin-top:15px;
 }
 
-/* FOOTER */
+button:hover{opacity:0.9;}
+
+#loading{
+display:none;
+margin-top:15px;
+font-size:14px;
+color:#2563eb;
+}
+
+#sliderContainer{
+position:relative;
+max-width:100%;
+margin-top:20px;
+display:none;
+}
+
+#originalImg,#resultImg{
+width:100%;
+border-radius:12px;
+}
+
+#resultImg{
+position:absolute;
+top:0;
+left:0;
+clip-path:inset(0 50% 0 0);
+}
+
+#range{
+width:100%;
+margin-top:10px;
+}
+
+.ad-box{
+margin:30px auto;
+max-width:728px;
+height:90px;
+background:#d1d5db;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:10px;
+color:#374151;
+font-weight:600;
+}
+
+.counter{
+margin-top:15px;
+font-size:14px;
+color:#6b7280;
+}
+
 footer{
-margin-top:80px;
+margin-top:60px;
 background:#111827;
 color:#9ca3af;
-padding:50px 20px 20px;
+padding:40px 20px;
 text-align:center;
 }
 
-footer h2{
-color:#3b82f6;
-margin-bottom:10px;
-}
-
-footer p{
-font-size:14px;
-margin-bottom:20px;
-}
-
-footer .links a{
-color:#d1d5db;
-margin:0 10px;
-text-decoration:none;
-font-size:14px;
-}
-
-footer .links a:hover{
-color:#3b82f6;
-}
-
-footer .copy{
-margin-top:20px;
-font-size:13px;
-border-top:1px solid #374151;
-padding-top:15px;
-}
+footer h2{color:#3b82f6;margin-bottom:10px;}
 </style>
 </head>
 <body>
 
 <nav>
 <div class="logo">Rizwan KTK</div>
-<ul>
-<li>Home</li>
-<li>Tools</li>
-<li>Pricing</li>
-<li>Login</li>
-</ul>
 </nav>
 
 <section class="hero">
-<h1>Remove Image Background Instantly</h1>
-<p>100% Automatic AI Background Remover Tool</p>
+<h1>Remove Background Instantly</h1>
+<p>AI Powered Tool</p>
 </section>
 
 <div class="card">
-<h3>Upload Your Image</h3>
 <input type="file" id="imageInput">
 <br>
 <button onclick="removeBg()">Remove Background</button>
 
-<img id="result">
-<br>
+<div id="loading">Processing Image...</div>
+
+<div id="sliderContainer">
+<img id="originalImg">
+<img id="resultImg">
+<input type="range" id="range" min="0" max="100" value="50">
+</div>
+
 <a id="downloadBtn" download="removed.png">
-<button>Download Image</button>
+<button style="display:none;" id="downloadButton">Download Image</button>
 </a>
+
+<div class="counter">
+Total Images Processed: <span id="count">0</span>
+</div>
+</div>
+
+<div class="ad-box">
+Your AdSense Ad Will Appear Here
 </div>
 
 <footer>
 <h2>Rizwan KTK</h2>
-<p>AI Powered Background Remover Tool</p>
-
-<div class="links">
-<a href="#">Home</a>
-<a href="#">Pricing</a>
-<a href="#">Tools</a>
-<a href="#">Contact</a>
-</div>
-
-<div class="copy">
-© 2026 Rizwan KTK. All Rights Reserved.
-</div>
+<p>© 2026 All Rights Reserved</p>
 </footer>
 
 <script>
-async function removeBg(){
-const fileInput = document.getElementById("imageInput");
-const file = fileInput.files[0];
+let counter = localStorage.getItem("usageCount") || 0;
+document.getElementById("count").innerText = counter;
 
-if(!file){
-alert("Please select an image");
-return;
-}
+document.getElementById("range").addEventListener("input",function(){
+document.getElementById("resultImg").style.clipPath =
+"inset(0 "+(100-this.value)+"% 0 0)";
+});
+
+async function removeBg(){
+const file = document.getElementById("imageInput").files[0];
+if(!file){alert("Select Image");return;}
+
+document.getElementById("loading").style.display="block";
 
 const formData = new FormData();
-formData.append("image_file", file);
-formData.append("size", "auto");
+formData.append("image_file",file);
+formData.append("size","auto");
 
 try{
 const response = await fetch("https://api.remove.bg/v1.0/removebg",{
 method:"POST",
 headers:{
-"X-Api-Key":"oozUi2NebkxBPqknZfCai5Mu"
+"X-Api-Key":"iAew79NUoKPPRZAoByzQRb8e"
 },
 body:formData
 });
@@ -217,17 +191,24 @@ if(response.ok){
 const blob = await response.blob();
 const url = URL.createObjectURL(blob);
 
-document.getElementById("result").src = url;
-document.getElementById("result").style.display="block";
+document.getElementById("originalImg").src = URL.createObjectURL(file);
+document.getElementById("resultImg").src = url;
 
-document.getElementById("downloadBtn").href = url;
-document.getElementById("downloadBtn").style.display="inline-block";
+document.getElementById("sliderContainer").style.display="block";
+document.getElementById("downloadBtn").href=url;
+document.getElementById("downloadButton").style.display="inline-block";
+
+counter++;
+localStorage.setItem("usageCount",counter);
+document.getElementById("count").innerText=counter;
 }else{
-alert("API Error. Check your API Key.");
+alert("API Error");
 }
-}catch(error){
-alert("Something went wrong.");
+}catch(e){
+alert("Error");
 }
+
+document.getElementById("loading").style.display="none";
 }
 </script>
 
