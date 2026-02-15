@@ -1,77 +1,104 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rizwan KTK - Background Remover</title>
+<title>Rizwan KTK - AI Background Remover</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+
 body{
-margin:0;
-font-family:Arial, sans-serif;
-background:#f4f6f9;
-text-align:center;
+background:linear-gradient(135deg,#f0f4ff,#e2e8f0);
+color:#111827;
 }
 
-header{
+/* NAVBAR */
+nav{
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:15px 20px;
+padding:20px 40px;
 background:white;
-box-shadow:0 2px 10px rgba(0,0,0,0.05);
-font-weight:bold;
-font-size:20px;
+box-shadow:0 4px 20px rgba(0,0,0,0.05);
+position:sticky;
+top:0;
+z-index:100;
 }
 
 .logo{
-color:#2b6df8;
-font-weight:bold;
+font-weight:700;
+font-size:22px;
+color:#2563eb;
 }
 
+nav ul{
+display:flex;
+list-style:none;
+gap:25px;
+}
+
+nav ul li{
+cursor:pointer;
+font-size:15px;
+color:#374151;
+}
+
+/* HERO */
 .hero{
-padding:30px 15px;
+text-align:center;
+padding:70px 20px 40px;
 }
 
 .hero h1{
-font-size:28px;
-margin-bottom:10px;
+font-size:38px;
+font-weight:700;
+margin-bottom:15px;
 }
 
 .hero p{
-color:gray;
+color:#6b7280;
+font-size:18px;
 }
 
-.upload-box{
+/* UPLOAD CARD */
+.card{
 background:white;
-margin:20px;
-padding:25px;
-border-radius:15px;
-box-shadow:0 5px 20px rgba(0,0,0,0.08);
+max-width:500px;
+margin:40px auto;
+padding:40px;
+border-radius:20px;
+box-shadow:0 20px 40px rgba(0,0,0,0.08);
+text-align:center;
 }
 
 input[type=file]{
-margin:10px 0;
+margin:20px 0;
 }
 
 button{
-background:#2b6df8;
+background:linear-gradient(135deg,#2563eb,#3b82f6);
 color:white;
 border:none;
-padding:14px 25px;
+padding:14px 30px;
 border-radius:30px;
 font-size:16px;
 cursor:pointer;
+transition:0.3s;
 }
 
 button:hover{
-background:#1f55c7;
+transform:translateY(-2px);
+box-shadow:0 10px 20px rgba(37,99,235,0.3);
 }
 
 #result{
-margin-top:20px;
-max-width:90%;
-border-radius:10px;
+margin-top:25px;
+max-width:100%;
+border-radius:12px;
+display:none;
 }
 
 #downloadBtn{
@@ -79,69 +106,88 @@ display:none;
 margin-top:15px;
 }
 
-.card{
-background:white;
-margin:15px;
-padding:20px;
-border-radius:15px;
-box-shadow:0 3px 15px rgba(0,0,0,0.05);
-text-align:left;
-}
-
+/* FOOTER */
 footer{
-background:#5f6b78;
-color:white;
-padding:40px 20px;
-margin-top:30px;
+margin-top:80px;
+background:#111827;
+color:#9ca3af;
+padding:50px 20px 20px;
+text-align:center;
 }
 
-footer a{
-display:block;
-color:#ddd;
-margin:8px 0;
+footer h2{
+color:#3b82f6;
+margin-bottom:10px;
+}
+
+footer p{
+font-size:14px;
+margin-bottom:20px;
+}
+
+footer .links a{
+color:#d1d5db;
+margin:0 10px;
 text-decoration:none;
+font-size:14px;
 }
 
+footer .links a:hover{
+color:#3b82f6;
+}
+
+footer .copy{
+margin-top:20px;
+font-size:13px;
+border-top:1px solid #374151;
+padding-top:15px;
+}
 </style>
 </head>
-
 <body>
 
-<header>
+<nav>
 <div class="logo">Rizwan KTK</div>
-<div>☰</div>
-</header>
+<ul>
+<li>Home</li>
+<li>Tools</li>
+<li>Pricing</li>
+<li>Login</li>
+</ul>
+</nav>
 
-<div class="hero">
-<h1>Remove Image Background</h1>
-<p>100% Automatically and Free</p>
-</div>
+<section class="hero">
+<h1>Remove Image Background Instantly</h1>
+<p>100% Automatic AI Background Remover Tool</p>
+</section>
 
-<div class="upload-box">
-<input type="file" id="imageInput"><br>
+<div class="card">
+<h3>Upload Your Image</h3>
+<input type="file" id="imageInput">
+<br>
 <button onclick="removeBg()">Remove Background</button>
 
-<br>
 <img id="result">
-
 <br>
 <a id="downloadBtn" download="removed.png">
 <button>Download Image</button>
 </a>
 </div>
 
-<!-- Sections -->
-<div class="card"><b>For Developers →</b></div>
-<div class="card"><b>For Ecommerce →</b></div>
-<div class="card"><b>For Individuals →</b></div>
-<div class="card"><b>For Photographers →</b></div>
-<div class="card"><b>For Marketing →</b></div>
-
 <footer>
-<a href="#">Terms of Service</a>
-<a href="#">Privacy Policy</a>
+<h2>Rizwan KTK</h2>
+<p>AI Powered Background Remover Tool</p>
+
+<div class="links">
+<a href="#">Home</a>
+<a href="#">Pricing</a>
+<a href="#">Tools</a>
 <a href="#">Contact</a>
-<p>© 2026 Rizwan KTK</p>
+</div>
+
+<div class="copy">
+© 2026 Rizwan KTK. All Rights Reserved.
+</div>
 </footer>
 
 <script>
@@ -150,7 +196,7 @@ const fileInput = document.getElementById("imageInput");
 const file = fileInput.files[0];
 
 if(!file){
-alert("Please select image");
+alert("Please select an image");
 return;
 }
 
@@ -170,17 +216,20 @@ body:formData
 if(response.ok){
 const blob = await response.blob();
 const url = URL.createObjectURL(blob);
+
 document.getElementById("result").src = url;
+document.getElementById("result").style.display="block";
+
 document.getElementById("downloadBtn").href = url;
 document.getElementById("downloadBtn").style.display="inline-block";
 }else{
 alert("API Error. Check your API Key.");
 }
 }catch(error){
-alert("Something went wrong");
+alert("Something went wrong.");
 }
 }
 </script>
 
 </body>
-  </html>
+</html>
