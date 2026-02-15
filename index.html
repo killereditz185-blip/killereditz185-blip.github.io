@@ -3,49 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rizwan Ke Tech - Background Remover</title>
+<title>Rizwan KTK - Background Remover</title>
 
 <style>
-
 body{
     margin:0;
-    font-family:'Segoe UI',sans-serif;
-    background:linear-gradient(135deg,#141e30,#243b55);
+    font-family:Arial, sans-serif;
+    background:#f4f6f8;
     text-align:center;
-    color:white;
 }
 
 .header{
-    padding:40px 20px 10px;
+    background:white;
+    padding:25px 10px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.05);
 }
 
 .brand{
-    font-size:38px;
+    font-size:32px;
     font-weight:bold;
-    background:linear-gradient(90deg,#00f2fe,#4facfe);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    letter-spacing:2px;
+    color:#2b2b2b;
 }
 
-.subtitle{
-    font-size:18px;
-    opacity:0.8;
-    margin-top:5px;
+.hero{
+    margin-top:60px;
 }
 
-.card{
+.upload-box{
     background:white;
-    color:black;
-    margin:30px auto;
-    padding:30px;
-    border-radius:20px;
     width:90%;
-    max-width:400px;
-    box-shadow:0 15px 40px rgba(0,0,0,0.4);
+    max-width:450px;
+    margin:20px auto;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
 }
 
-input[type="file"]{
+.upload-box input{
     margin-bottom:15px;
 }
 
@@ -55,53 +49,54 @@ button{
     border-radius:30px;
     font-size:16px;
     cursor:pointer;
-    transition:0.3s;
-    margin-top:10px;
 }
 
 .remove-btn{
-    background:linear-gradient(90deg,#ff512f,#dd2476);
+    background:#007bff;
     color:white;
 }
 
 .download-btn{
-    background:linear-gradient(90deg,#00c851,#007e33);
+    background:#28a745;
     color:white;
     display:none;
+    margin-top:15px;
 }
 
 img{
     max-width:100%;
     margin-top:20px;
-    border-radius:12px;
+    border-radius:10px;
 }
 
 .footer{
-    margin-top:40px;
-    padding-bottom:20px;
+    margin-top:60px;
+    padding:20px;
     font-size:14px;
-    opacity:0.7;
+    color:#777;
 }
-
 </style>
 </head>
 
 <body>
 
 <div class="header">
-    <div class="brand">Rizwan Ke Tech</div>
-    <div class="subtitle">Premium Quality Background Remover</div>
+    <div class="brand">Rizwan KTK</div>
 </div>
 
-<div class="card">
-    <input type="file" id="fileInput"><br>
-    <button class="remove-btn" onclick="removeBg()">Remove Background</button><br>
-    <img id="resultImage"><br>
-    <button class="download-btn" id="downloadBtn" onclick="downloadImage()">Download Image</button>
+<div class="hero">
+    <h2>Remove Background from Image</h2>
+
+    <div class="upload-box">
+        <input type="file" id="fileInput"><br>
+        <button class="remove-btn" onclick="removeBg()">Upload & Remove</button>
+        <img id="resultImage"><br>
+        <button class="download-btn" id="downloadBtn" onclick="downloadImage()">Download Image</button>
+    </div>
 </div>
 
 <div class="footer">
-    © 2026 Rizwan Ke Tech | All Rights Reserved
+    © 2026 Rizwan KTK | Premium Background Tool
 </div>
 
 <script>
@@ -132,7 +127,7 @@ async function removeBg(){
         });
 
         if(!response.ok){
-            alert("API Error! Check API key or limit.");
+            alert("API Error! Check API limit or key.");
             return;
         }
 
@@ -153,7 +148,7 @@ function downloadImage(){
     const url = document.getElementById("downloadBtn").dataset.url;
     const a = document.createElement("a");
     a.href = url;
-    a.download = "Rizwan-Background-Removed.png";
+    a.download = "Rizwan-KTK-Background-Removed.png";
     a.click();
 }
 
