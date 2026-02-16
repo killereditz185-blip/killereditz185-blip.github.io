@@ -4,208 +4,236 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rizwan KTK Background Remover</title>
-
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+
 body{
-    margin:0;
-    font-family:Arial, sans-serif;
-    background:#f2f2f2;
-    text-align:center;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:#fff;
+min-height:100vh;
+display:flex;
+flex-direction:column;
+align-items:center;
 }
 
 header{
-    background:white;
-    padding:15px;
-    font-size:22px;
-    font-weight:bold;
+padding:30px;
+font-size:28px;
+font-weight:700;
+letter-spacing:1px;
 }
 
-.hero-img{
-    width:90%;
-    max-width:400px;
-    border-radius:20px;
-    margin-top:20px;
+.container{
+width:95%;
+max-width:900px;
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(10px);
+border-radius:20px;
+padding:30px;
+box-shadow:0 15px 35px rgba(0,0,0,0.4);
+margin-bottom:40px;
 }
 
-h1{
-    font-size:28px;
-    margin:20px 0 10px;
+.upload-area{
+border:2px dashed #fff;
+padding:40px;
+text-align:center;
+border-radius:15px;
+cursor:pointer;
+transition:0.3s;
 }
 
-.sub{
-    color:gray;
-    margin-bottom:20px;
+.upload-area:hover{
+background:rgba(255,255,255,0.1);
 }
 
 button{
-    padding:15px;
-    width:80%;
-    max-width:300px;
-    border:none;
-    border-radius:30px;
-    font-size:16px;
-    font-weight:bold;
-    margin:10px 0;
-    cursor:pointer;
+margin-top:20px;
+padding:12px 25px;
+border:none;
+border-radius:30px;
+cursor:pointer;
+font-weight:600;
+transition:0.3s;
 }
 
-.upload{background:#2d6cdf;color:white;}
-.remove{background:#e74c3c;color:white;}
-.download{background:#28a745;color:white;display:none;}
+.remove-btn{
+background:#ff4b2b;
+color:white;
+}
 
-.samples img{
-    width:60px;
-    height:60px;
-    border-radius:15px;
-    margin:5px;
-    object-fit:cover;
+.download-btn{
+background:#00c6ff;
+color:white;
+display:none;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+#preview{
+margin-top:20px;
+max-width:100%;
+border-radius:10px;
+}
+
+.loader{
+display:none;
+margin-top:20px;
 }
 
 .rating{
-    background:white;
-    width:85%;
-    margin:20px auto;
-    padding:20px;
-    border-radius:20px;
+margin-top:30px;
+text-align:center;
 }
 
-.stars{
-    color:#2d6cdf;
-    font-size:22px;
+.star{
+font-size:28px;
+cursor:pointer;
+color:gray;
 }
 
-.blog{
-    text-align:left;
-    width:85%;
-    margin:20px auto;
+.star.active{
+color:gold;
 }
 
-.blog-card{
-    background:white;
-    padding:15px;
-    border-radius:15px;
-    margin-bottom:15px;
+.gallery{
+margin-top:30px;
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+justify-content:center;
+}
+
+.gallery img{
+width:100px;
+height:100px;
+object-fit:cover;
+border-radius:10px;
 }
 
 footer{
-    background:#6c757d;
-    color:white;
-    padding:30px 10px;
-    border-top-left-radius:40px;
-    border-top-right-radius:40px;
-    margin-top:30px;
+margin-bottom:20px;
+opacity:0.6;
 }
+
 </style>
 </head>
-
 <body>
 
-<header>Rizwan KTK</header>
+<header>Rizwan KTK Background Remover</header>
 
-<img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e" class="hero-img" id="preview">
+<div class="container">
 
-<h1>Remove Image Background</h1>
-<div class="sub">100% Automatically and Free</div>
-
-<input type="file" id="fileInput" hidden>
-
-<button class="upload" onclick="document.getElementById('fileInput').click()">
-Upload Image
-</button>
-
-<button class="remove" onclick="removeBg()">
-Remove Background
-</button>
-
-<button class="download" id="downloadBtn" onclick="downloadImage()">
-Download Image
-</button>
-
-<div class="samples">
-<p>No image? Try one of these:</p>
-<img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2">
-<img src="https://images.unsplash.com/photo-1507149833265-60c372daea22">
-<img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70">
-<img src="https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3">
+<div class="upload-area" onclick="document.getElementById('fileInput').click()">
+<p>Click or Drag & Drop Image Here</p>
+<input type="file" id="fileInput" hidden accept="image/*">
 </div>
+
+<img id="preview"/>
+
+<button class="remove-btn" onclick="removeBackground()">Remove Background</button>
+<button class="download-btn" id="downloadBtn" onclick="downloadImage()">Download Image</button>
+
+<div class="loader" id="loader">Processing...</div>
 
 <div class="rating">
-<h3>Product Rating</h3>
-<div class="stars">★★★★☆</div>
-<p>(4.4) based on 155 reviews</p>
+<p>Rate This Tool</p>
+<span class="star" onclick="rate(1)">★</span>
+<span class="star" onclick="rate(2)">★</span>
+<span class="star" onclick="rate(3)">★</span>
+<span class="star" onclick="rate(4)">★</span>
+<span class="star" onclick="rate(5)">★</span>
 </div>
 
-<div class="blog">
-<h2>Blog</h2>
-
-<div class="blog-card">
-<b>Nov 25, 2025</b><br>
-Strava overlay: How to use it for Instagram stories and posts
-</div>
-
-<div class="blog-card">
-<b>Nov 17, 2025</b><br>
-Black Friday offer: 50% off selected yearly plans
-</div>
-
-<div class="blog-card">
-<b>Oct 20, 2025</b><br>
-Remove the background in GIMP
+<div class="gallery">
+<img src="https://via.placeholder.com/150">
+<img src="https://via.placeholder.com/150">
+<img src="https://via.placeholder.com/150">
 </div>
 
 </div>
 
-<footer>
-<h3>Rizwan KTK</h3>
-<p>Terms of Service</p>
-<p>Privacy Policy</p>
-<p>Cookie Policy</p>
-<p>© 2025 Rizwan KTK Background Remover</p>
-</footer>
+<footer>© 2026 Rizwan KTK</footer>
 
 <script>
+
+const API_KEY = "QJZV1TkmNquJStFhsrKc4sXT";
 
 let selectedFile;
 let outputBlob;
 
-document.getElementById("fileInput").addEventListener("change",function(e){
-    selectedFile = e.target.files[0];
-    document.getElementById("preview").src = URL.createObjectURL(selectedFile);
+document.getElementById('fileInput').addEventListener('change', function(e){
+selectedFile = e.target.files[0];
+let reader = new FileReader();
+reader.onload = function(){
+document.getElementById('preview').src = reader.result;
+}
+reader.readAsDataURL(selectedFile);
 });
 
-async function removeBg(){
+async function removeBackground(){
 
 if(!selectedFile){
-alert("Upload image first");
+alert("Please select an image first");
 return;
 }
 
-const formData = new FormData();
+document.getElementById('loader').style.display = "block";
+
+let formData = new FormData();
 formData.append("image_file", selectedFile);
 formData.append("size", "auto");
 
-const response = await fetch("https://api.remove.bg/v1.0/removebg",{
+try{
+
+let response = await fetch("https://api.remove.bg/v1.0/removebg",{
 method:"POST",
 headers:{
-"X-Api-Key":"QJZV1TkmNquJStFhsrKc4sXT"
+"X-Api-Key":API_KEY
 },
 body:formData
 });
 
-if(response.ok){
-outputBlob = await response.blob();
-document.getElementById("preview").src = URL.createObjectURL(outputBlob);
-document.getElementById("downloadBtn").style.display="inline-block";
-}else{
-alert("Error removing background");
+if(!response.ok){
+throw new Error("API Error");
 }
+
+outputBlob = await response.blob();
+let url = URL.createObjectURL(outputBlob);
+document.getElementById('preview').src = url;
+document.getElementById('downloadBtn').style.display="inline-block";
+
+}catch(error){
+alert("Error removing background. Check API key.");
+}
+
+document.getElementById('loader').style.display = "none";
 }
 
 function downloadImage(){
-const a=document.createElement("a");
-a.href=URL.createObjectURL(outputBlob);
-a.download="rizwan-ktk.png";
-a.click();
+let link = document.createElement("a");
+link.href = URL.createObjectURL(outputBlob);
+link.download = "removed-bg.png";
+link.click();
+}
+
+function rate(stars){
+let starElements = document.querySelectorAll(".star");
+starElements.forEach((star,index)=>{
+star.classList.toggle("active", index < stars);
+});
+localStorage.setItem("rating",stars);
+}
+
+window.onload = function(){
+let savedRating = localStorage.getItem("rating");
+if(savedRating){
+rate(savedRating);
+}
 }
 
 </script>
