@@ -1,239 +1,145 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rizwan KTK Background Remover</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<title>Rizwan KTK - Background Remover</title>
+
 <style>
-
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
-
 body{
-background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-color:#fff;
-min-height:100vh;
-display:flex;
-flex-direction:column;
-align-items:center;
+margin:0;
+font-family:Arial, sans-serif;
+background:linear-gradient(135deg,#ff4ecd,#6a5cff);
+color:white;
+text-align:center;
 }
 
 header{
-padding:30px;
-font-size:28px;
-font-weight:700;
-letter-spacing:1px;
+padding:15px;
+font-size:22px;
+font-weight:bold;
+background:white;
+color:black;
 }
 
 .container{
-width:95%;
-max-width:900px;
-background:rgba(255,255,255,0.08);
-backdrop-filter:blur(10px);
-border-radius:20px;
-padding:30px;
-box-shadow:0 15px 35px rgba(0,0,0,0.4);
-margin-bottom:40px;
+padding:20px;
 }
 
-.upload-area{
-border:2px dashed #fff;
-padding:40px;
-text-align:center;
+.upload-box{
+margin-top:20px;
+border:2px dashed white;
+padding:40px 20px;
 border-radius:15px;
 cursor:pointer;
-transition:0.3s;
-}
-
-.upload-area:hover{
 background:rgba(255,255,255,0.1);
 }
 
 button{
 margin-top:20px;
-padding:12px 25px;
+padding:10px 20px;
 border:none;
-border-radius:30px;
+border-radius:25px;
+font-size:16px;
 cursor:pointer;
-font-weight:600;
-transition:0.3s;
 }
 
-.remove-btn{
-background:#ff4b2b;
-color:white;
+#removeBtn{
+background:white;
+color:black;
 }
 
-.download-btn{
-background:#00c6ff;
+#downloadBtn{
+background:black;
 color:white;
 display:none;
 }
 
-button:hover{
-transform:scale(1.05);
-}
-
-#preview{
-margin-top:20px;
+img{
 max-width:100%;
-border-radius:10px;
-}
-
-.loader{
-display:none;
 margin-top:20px;
-}
-
-.rating{
-margin-top:30px;
-text-align:center;
-}
-
-.star{
-font-size:28px;
-cursor:pointer;
-color:gray;
-}
-
-.star.active{
-color:gold;
-}
-
-.gallery{
-margin-top:30px;
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-justify-content:center;
-}
-
-.gallery img{
-width:100px;
-height:100px;
-object-fit:cover;
 border-radius:10px;
 }
-
-footer{
-margin-bottom:20px;
-opacity:0.6;
-}
-
 </style>
 </head>
+
 <body>
 
-<header>Rizwan KTK Background Remover</header>
+<header>Rizwan KTK</header>
 
 <div class="container">
+<h2>Free Image Background Remover</h2>
+<p>Upload image and remove background instantly</p>
 
-<div class="upload-area" onclick="document.getElementById('fileInput').click()">
-<p>Click or Drag & Drop Image Here</p>
-<input type="file" id="fileInput" hidden accept="image/*">
+<div class="upload-box" onclick="document.getElementById('fileInput').click()">
+Tap to upload an image
 </div>
 
-<img id="preview"/>
+<input type="file" id="fileInput" accept="image/*" style="display:none">
 
-<button class="remove-btn" onclick="removeBackground()">Remove Background</button>
-<button class="download-btn" id="downloadBtn" onclick="downloadImage()">Download Image</button>
+<br>
+<button id="removeBtn" onclick="removeBG()">Remove Background</button>
+<br>
+<button id="downloadBtn" onclick="downloadImage()">Download PNG</button>
 
-<div class="loader" id="loader">Processing...</div>
-
-<div class="rating">
-<p>Rate This Tool</p>
-<span class="star" onclick="rate(1)">★</span>
-<span class="star" onclick="rate(2)">★</span>
-<span class="star" onclick="rate(3)">★</span>
-<span class="star" onclick="rate(4)">★</span>
-<span class="star" onclick="rate(5)">★</span>
+<div id="result"></div>
 </div>
-
-<div class="gallery">
-<img src="https://via.placeholder.com/150">
-<img src="https://via.placeholder.com/150">
-<img src="https://via.placeholder.com/150">
-</div>
-
-</div>
-
-<footer>© 2026 Rizwan KTK</footer>
 
 <script>
 
-const API_KEY = "QJZV1TkmNquJStFhsrKc4sXT";
-
 let selectedFile;
-let outputBlob;
 
-document.getElementById('fileInput').addEventListener('change', function(e){
+document.getElementById("fileInput").addEventListener("change", function(e){
 selectedFile = e.target.files[0];
-let reader = new FileReader();
-reader.onload = function(){
-document.getElementById('preview').src = reader.result;
-}
-reader.readAsDataURL(selectedFile);
 });
 
-async function removeBackground(){
+function removeBG(){
 
 if(!selectedFile){
-alert("Please select an image first");
+alert("Please upload image first");
 return;
 }
 
-document.getElementById('loader').style.display = "block";
-
-let formData = new FormData();
+const formData = new FormData();
 formData.append("image_file", selectedFile);
 formData.append("size", "auto");
 
-try{
-
-let response = await fetch("https://api.remove.bg/v1.0/removebg",{
-method:"POST",
-headers:{
-"X-Api-Key":API_KEY
+fetch("https://api.remove.bg/v1.0/removebg", {
+method: "POST",
+headers: {
+"X-Api-Key": "QJZV1TkmNquJStFhsrKc4sXT"
 },
-body:formData
+body: formData
+})
+.then(res => res.blob())
+.then(blob => {
+
+const url = URL.createObjectURL(blob);
+const img = document.createElement("img");
+img.src = url;
+
+const result = document.getElementById("result");
+result.innerHTML = "";
+result.appendChild(img);
+
+document.getElementById("downloadBtn").style.display="inline-block";
+
+})
+.catch(err=>{
+alert("Error removing background");
+console.log(err);
 });
 
-if(!response.ok){
-throw new Error("API Error");
-}
-
-outputBlob = await response.blob();
-let url = URL.createObjectURL(outputBlob);
-document.getElementById('preview').src = url;
-document.getElementById('downloadBtn').style.display="inline-block";
-
-}catch(error){
-alert("Error removing background. Check API key.");
-}
-
-document.getElementById('loader').style.display = "none";
 }
 
 function downloadImage(){
-let link = document.createElement("a");
-link.href = URL.createObjectURL(outputBlob);
-link.download = "removed-bg.png";
-link.click();
-}
+const img = document.querySelector("#result img");
+if(!img) return;
 
-function rate(stars){
-let starElements = document.querySelectorAll(".star");
-starElements.forEach((star,index)=>{
-star.classList.toggle("active", index < stars);
-});
-localStorage.setItem("rating",stars);
-}
-
-window.onload = function(){
-let savedRating = localStorage.getItem("rating");
-if(savedRating){
-rate(savedRating);
-}
+const a = document.createElement("a");
+a.href = img.src;
+a.download = "background_removed.png";
+a.click();
 }
 
 </script>
