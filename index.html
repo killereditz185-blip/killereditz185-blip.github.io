@@ -184,8 +184,8 @@ const formData = new FormData();
 formData.append("image_file", selectedFile);
 formData.append("size", "auto");
 
-/* 🔐 API removed – now calling backend */
-const response = await fetch("/api/remove",{
+/* 🔐 calling backend */
+const response = await fetch("/api/remove-bg",{
 method:"POST",
 body:formData
 });
